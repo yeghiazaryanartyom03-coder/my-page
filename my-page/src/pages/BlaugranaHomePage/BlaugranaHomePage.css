@@ -1,0 +1,419 @@
+body {
+    margin: 0;
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin-top: 67px;
+    background-color: rgb(9,15,45);
+    height: 270vh;
+}
+.background-container{
+    background:url(/pictures/background-picture.webp) top /cover no-repeat;
+    
+    width: 100vw;
+    height: 80vh;
+    -webkit-mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+    mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+
+}
+.slogan{
+    color: white;
+    font-size: 38px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 210px;
+    left: 0;
+    right: 0;
+    z-index: 1005;
+}
+.main-content{
+    background-color: rgb(9,15,45);
+    display: flex;
+    flex-direction: column;
+    width: 100vw;   
+    position: relative;
+
+}
+
+.white-background-wide{
+    display: flex;
+    padding: 20px;
+    background-color: white;
+    height: 56vh;
+    width: 90vw; 
+    margin-left: auto;
+    margin-right: auto;  
+    border-radius: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -40vh;
+    z-index: 1004;
+    
+}
+
+.top{
+    flex-direction: column;
+}
+.matches{
+    margin-top: 4vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.matches::-webkit-scrollbar {
+    display: none;
+}
+.match-conteiner{
+    width: 280px;
+    height: 40vh;
+    background-color: rgb(9,15,45);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5vh;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 20px;
+    text-decoration: none;
+    z-index: 1020;
+    
+}
+.match-conteiner:hover .match-info{
+    height: 25vh;
+}
+.match-conteiner:hover .prevew{
+    transform: translateY(20px);
+}
+.prevew{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    transition: transform 0.35s ease;
+}
+.left-team, .right-team{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.match-logo{
+    width: 6vh;
+    height: 6vh;
+}
+.match-info{
+    transition: height 0.35s ease;
+    background-color: rgb(253, 197, 44);
+    width: 280px;
+    height: 23vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 0px 19px 19px;
+}
+.match-date{
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+ .turnament-info, .stadium-info{
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+.match-date{
+margin-top: 10px;
+}
+.title-section-matches{
+    font-size: 32px;
+    font-weight: bold;
+    color: rgb(9,15,45);
+}
+.white-background-narrow{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    height: 80vh;
+    width: 90vw; 
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: -118vh;
+    z-index: 1005;
+    border-top: 3px solid #81040b;
+    border-bottom: 3px solid #81040b;
+}
+.part-title{
+    color: rgb(9,15,45);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    position: absolute;
+    top: 0;
+}
+.part-title::after{
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #a11;
+    margin: 12px auto 0; 
+}
+.news-img{
+    height: 150px;
+    width: 90%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+.news-content{
+    display: grid;
+    margin-top: -10px;
+    grid-template-columns: repeat(2,1fr);
+    gap: 2px 18px;
+    width: 90%;
+    height: 400px;
+    transform: scale(0.9);
+    transition: transform 0.5s ease;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    transform: translateY(30px);
+}
+
+@media(min-width:980px){
+    .news-content{
+        grid-template-columns: repeat(3,1fr);
+        transform: scale(0.95);
+        
+    }
+}
+
+@media(min-width:1300px){
+    .news-content{
+        grid-template-columns: repeat(4,1fr);
+        transform: scale(1);
+        margin-top: 60px;
+        height: 500px;
+
+    }
+    .white-background-narrow{
+        justify-content: start;
+    }
+}
+.news-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 80px;
+    position: relative;
+}
+.news-info{
+    background-color: rgb(247, 247, 247);
+    min-height: 12vh;
+    width: 270px;
+    border-radius: 14px;
+    transition: transform .2s ease, box-shadow .2s ease;
+    position: absolute;
+    top: 99px;
+    left: 20px;
+    z-index: 1000;
+}
+.news-info:hover{
+    transform:  translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+.other-info{
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    margin: 0px 12px 12px;
+    color: #777777;
+    
+}
+.news-title{
+    font-size: 20px;
+    font-weight: 600px;
+    margin: 12px 12px 6px;
+    font-weight: 600;
+}
+.bottom{
+    width: 97vw;
+    height: 60vh;
+    background-color: white;
+    position: absolute;
+    top: 116vh;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    border-radius: 0px 20px 20px 0px;
+    display: grid;
+    grid-template-rows: auto;
+    justify-items: center;
+}
+.first-team-title{
+    color: rgb(9,15,45);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 20px;
+
+}
+.first-team-title::after{
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #a11;
+    margin: 8px auto 0; 
+}
+.players-grid{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 94vw;
+    overflow-x: scroll;  
+}
+.players-grid::-webkit-scrollbar{
+    display: none;
+}
+.player-conteiner{
+    margin-top: 10px;
+    width: 300px;
+    height: 50vh;
+    flex-shrink: 0;
+    text-decoration: none;
+    overflow: hidden;
+}
+.player-info{
+    
+    height: 40vh;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.name-surname{
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    gap: 5px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    align-items: end;
+    transition: transform 0.35s ease;
+}
+.name{
+  font-size: 18px;
+  padding-bottom: 3px;
+}
+.surname{
+  font-size: 28px;
+}
+.number{
+    color: white;
+    font-size: 160px;
+    opacity: 0.4;
+}
+.position{
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 10px;
+    opacity: 0.7;
+    transition: transform 0.35s ease;
+}
+.statistic{
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transform: translateY(100%);
+    opacity: 0;
+
+    transition: transform 0.35s ease,opacity 0.35s ease;
+}
+.player-conteiner:hover .statistic{
+    transform: translateY(0);
+    opacity: 1;
+}
+.player-conteiner:hover .name-surname,.player-conteiner:hover .position{
+    transform: translateY(-55px);
+}
+.stat-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.barca-stat{
+    text-align: center;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.sponsers{
+    background: linear-gradient(
+    to bottom,
+    rgba(9,15,45,0) 0%,
+    #560307 40%);
+    width: 100vw;
+    height: 30vh;
+    position: absolute;
+    top: 186vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+.vertical-line{
+    width: 3px;
+    height: 60px;
+    background-color: white;
+}
+.main-partners{
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+}
+.partner{
+    height: 40px;
+
+}
+
+.spotify{
+    height: 60px;
+}
