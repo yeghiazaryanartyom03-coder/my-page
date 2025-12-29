@@ -3,7 +3,7 @@
     height: 90vh;
     background-color:rgb(24, 23, 51);
     position: absolute;
-    top: 300vh;
+    top: var(--footer-offset);
 }
 .site-logo{
     height: 20vh;

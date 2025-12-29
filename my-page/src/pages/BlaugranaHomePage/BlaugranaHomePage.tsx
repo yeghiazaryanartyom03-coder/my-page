@@ -38,7 +38,10 @@ export function BlaugranaHomePage() {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="footer-home-page">
+        <Footer />
+      </div>
+      
     </>
   );
 }

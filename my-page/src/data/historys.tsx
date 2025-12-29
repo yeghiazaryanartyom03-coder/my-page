@@ -1,4 +1,4 @@
-interface History {
+export interface History {
   image: string,
   title: string,
   startingText: string
@@ -61,7 +61,7 @@ export const historis:History[] = [
     startingText:"The Club's growth as a social entity allowed it to create its first home ground with a stand"
   },
   {
-    image:'/pictures/historical-images/99-09.webp',
+    image:'/pictures/historical-images/foundation.webp',
     title: '1899 -1909. Foundation and survival',
     startingText:"Founder of the Club Joan Gamper was the driving force behind FC Barcelona in its first 25 years of existence"
   },
