@@ -53,7 +53,7 @@ export const matches:Match[] = [
   {
     apponent: 'Newcastle',
     stadium: "St.James' Park",
-    tournament: 'Champions league',
+    tournament: 'Champions League',
     isInHome: false,
     image: '/pictures/club-logos/NEW.png',
     date: '09.18.25, 20:00',
@@ -64,6 +64,7 @@ export const matches:Match[] = [
     apponent: 'Getafe',
     stadium: 'Estadi Johan Cruyff',
     tournament: 'La Liga',
+
     isInHome: true,
     image: '/pictures/club-logos/GET.png',
     date: '09.21.25, 20:00',
@@ -243,7 +244,7 @@ export const matches:Match[] = [
   {
     apponent: 'Deportivo Guadalajara',
     stadium: 'Estadio Pedro Escartin',
-    tournament: 'La Liga',
+    tournament: 'copa del rey',
     isInHome: false,
     image: '/pictures/club-logos/GUA.png',
     date: '12.16.25, 21:30',
@@ -287,7 +288,7 @@ export const matches:Match[] = [
   {
     apponent: 'Slavia Pragua',
     stadium: 'Fortuna Arena',
-    tournament: 'Champion League',
+    tournament: 'Champions League',
     isInHome: false,
     image: '/pictures/club-logos/SVP.png',
     date: '01.21.26, 20:00',

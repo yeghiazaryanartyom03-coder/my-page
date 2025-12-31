@@ -6,7 +6,7 @@ interface MatchProps {
   match: Match
 }
 
-export function MatchInfo({match}:MatchProps){
+export function MatchHomePage({match}:MatchProps){
   return (
     <NavLink to='/' className="match-conteiner">
           <div className="prevew">

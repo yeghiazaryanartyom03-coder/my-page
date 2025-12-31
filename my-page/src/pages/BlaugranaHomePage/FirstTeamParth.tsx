@@ -11,7 +11,7 @@ export function FirstTeamParth() {
       <div className="players-grid">
         {players.map((player)=>{
           return (
-            <Player player = {player}/>
+            <Player player = {player} variant="home-page"/>
           )
         })}
         

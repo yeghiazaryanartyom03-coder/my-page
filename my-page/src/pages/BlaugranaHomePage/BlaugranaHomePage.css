@@ -303,7 +303,7 @@ margin-top: 10px;
 .players-grid::-webkit-scrollbar{
     display: none;
 }
-.player-conteiner{
+.player-conteiner-home-page{
     margin-top: 10px;
     width: 300px;
     height: 50vh;
@@ -311,7 +311,7 @@ margin-top: 10px;
     text-decoration: none;
     overflow: hidden;
 }
-.player-info{
+.player-info-home-page{
     
     height: 40vh;
     display: flex;
@@ -366,11 +366,11 @@ margin-top: 10px;
 
     transition: transform 0.35s ease,opacity 0.35s ease;
 }
-.player-conteiner:hover .statistic{
+.player-conteiner-home-page:hover .statistic{
     transform: translateY(0);
     opacity: 1;
 }
-.player-conteiner:hover .name-surname,.player-conteiner:hover .position{
+.player-conteiner-home-page:hover .name-surname,.player-conteiner-home-page:hover .position{
     transform: translateY(-55px);
 }
 .stat-info{
@@ -379,7 +379,7 @@ margin-top: 10px;
     align-items: center;
     justify-content: center;
 }
-.barca-stat{
+.barca-stat-home-page{
     text-align: center;
     font-size: 13px;
     font-weight: 800;

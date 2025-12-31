@@ -1,0 +1,142 @@
+  .first-team-background{
+    background:url(/pictures/first-team/first-team.webp) top /cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 80vh;
+    -webkit-mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+    mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+
+}
+
+.first-team-content{
+  background-color: white;
+  border-radius: 30px 30px 0px 0px;
+  width: 98%;
+  height: 5780px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateY(-140px);
+
+}
+.team-title{
+  text-align: center;
+  padding-top: 20px;
+  color: rgb(4, 13, 67);
+  font-size: 34px;
+  font-weight: 700;
+}
+.first-team-position{
+  margin-top: 25px;
+  font-size: 25px;
+  font-weight: 600;
+  color: rgb(253, 197, 44);
+  text-align: center;
+}
+.first-team-grid{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+.player-conteiner-first-team{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 300px;
+    height: 400px;
+    text-decoration: none;
+}
+.player-info-first-team{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 355px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+.player-info-first-team::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,15,45,0) 0%,
+    rgba(10,15,45,0.8) 100%
+  );
+  z-index: 1;
+}
+.player-info-first-team > *{
+  z-index: 2;
+}
+.player-conteiner-first-team:hover .statistic{
+    transform: translateY(0);
+    opacity: 1;
+}
+.player-conteiner-first-team:hover .name-surname,.player-conteiner-first-team:hover .position{
+    transform: translateY(-55px);
+}
+.barca-stat-first-team{
+    width: 90px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.first-team-footer{
+    --footer-offset: ;
+}
+@media(min-width:1200px){
+  .first-team-grid{
+    grid-template-columns: repeat(3,1fr);
+  }
+  .first-team-content{
+    height: 4100px;
+  }
+  .first-team-footer{
+    --footer-offset: ;
+  }
+}
+@media(min-width:1500px){
+  .first-team-position{
+    margin-bottom: 20px;
+    font-size: 34px;
+  }
+  .first-team-grid{
+    grid-template-columns: repeat(3,1fr);
+  }
+  .player-info-first-team{
+    width: 480px;
+    height: 550px;
+  }
+  .player-conteiner-first-team{
+    width: 480px;
+    height: 450px;
+    margin-bottom: 160px;
+  }
+  
+  .first-team-content{
+    height: 6100px;
+  }
+  .first-team-footer{
+    --footer-offset: ;
+  }
+}
