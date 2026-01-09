@@ -8,7 +8,7 @@ export function HistoryGrid(){
         <div className="history-content">
           
           {historis.map((history)=>{
-            return (
+            return ( 
               <HistoryContent  history={history}/> 
             )
           })}
