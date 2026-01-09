@@ -1,7 +1,12 @@
 import { matches } from "../../data/matches";
 import { Match } from "./Match";
+import type { RefObject } from "react";
 
-export function MatchesGrid() {
+interface MatchesGridProps {
+  refTarget:RefObject<HTMLDivElement | null>
+}
+
+export function MatchesGrid({refTarget}:MatchesGridProps) {
   
   return (
     <>
@@ -9,7 +14,7 @@ export function MatchesGrid() {
       <div className="matches-grid">
         
         {matches.map((match,index)=>{
-             return <Match index={index} match={match}/>
+             return <Match index={index} match={match} refTarget={refTarget}/>
           
         }) }
       </div>

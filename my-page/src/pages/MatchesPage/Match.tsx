@@ -1,12 +1,13 @@
 import  {type Match, matches } from "../../data/matches";
 import BarcaLogo from "../../assets/icons/barca-logo.png";
-import { useEffect, useRef } from "react";
+import { useEffect, type RefObject } from "react";
 interface Prop {
   match: Match;
   index: number;
+  refTarget: RefObject<HTMLDivElement | null>
 }
-export function Match({ match, index }: Prop) {
-  const refTarget = useRef<HTMLDivElement | null>(null);
+export function Match({ match, index, refTarget }: Prop) {
+  
   useEffect(()=>{
     refTarget.current?.scrollIntoView({
       behavior: "auto",
