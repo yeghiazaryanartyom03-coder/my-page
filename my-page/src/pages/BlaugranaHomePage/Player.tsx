@@ -1,5 +1,5 @@
 import { NavLink } from "react-router"
-import type { Players } from "../../data/players"
+import { type Players } from "../../data/players"
 
 interface Props{
   player:Players
@@ -27,7 +27,7 @@ export function Player({player,variant}:Props){
               </div>
               
               <div className="stat-info goals">
-                <div className={`barca-stat-${variant} barca-goals`}>Barca {player.position === 'goalkeeper'?'clean sheets':'goals'}</div>
+                <div className={`barca-stat-${variant} barca-goals ${player.position}`}>Barca {player.position === 'goalkeeper'?'clean sheets':'goals'}</div>
                 <div className="goals">{player.position === 'goalkeeper'?player.cleanSheets:player.goals}</div>
               </div>
               <div className="stat-info assists">

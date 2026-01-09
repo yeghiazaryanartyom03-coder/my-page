@@ -55,6 +55,12 @@
   display: grid;
   grid-template-columns: repeat(2,1fr);
 }
+.stat-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px;
+  }
 .player-conteiner-first-team{
     margin-top: 10px;
     margin-left: 10px;
@@ -133,9 +139,13 @@
     margin-bottom: 160px;
   }
   
+  .goalkeeper{
+    width: 120px;
+  }
   .first-team-content{
     height: 6100px;
   }
+  
   .first-team-footer{
     --footer-offset: ;
   }
