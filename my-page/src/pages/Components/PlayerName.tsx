@@ -5,7 +5,7 @@ type propType = {
 
 export function PlayerName({name,surname}:propType){
   return(
-    <a href="/" className="player-name">
+    <a href="/" className="no-underline text-[rgb(120,120,120)] mt-2 hover:text-[#670a0a]">
                   {name + ` ${surname}`}
                 </a>
   )

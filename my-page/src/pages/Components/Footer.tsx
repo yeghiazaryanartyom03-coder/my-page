@@ -10,17 +10,17 @@ import { PlayerName } from "./PlayerName";
 
 export function Footer(){
   return(
-    <div className="footer">
-        <div className="footer-grid">
-          <div className="bottom-logo">
-            <img src={BarcaBottomLogo} className="site-logo" />
-            <div className="barca-name">FC Barcelona</div>
+    <div className="footer w-screen h-155 bg-[rgb(24,23,51)] absolute">
+        <div className="footer-grid relative">
+          <div className="flex items-center">
+            <img src={BarcaBottomLogo} className="h-25 ml-5 mr-2 mt-5 mb-5" />
+            <div className="ml-2.5 text-3xl text-white font-bold">FC Barcelona</div>
           </div>
 
-          <hr />
-          <div className="social-media">
-            <div className="follow-us">Follow Us On Social Media</div>
-            <div className="medias">
+          <hr className="w-[95vw] h-1 bg-[rgb(253,197,44)] border-none mx-auto"/>
+          <div className="flex flex-col items-center">
+            <div className="text-white text-2xl font-bold">Follow Us On Social Media</div>
+            <div className="flex mt-3">
               <a href="" className="facebook">
                 <img src={FacebookLogo} className="media-logo" />
               </a>
@@ -37,7 +37,7 @@ export function Footer(){
                 <img src={TiktokLogo} className="media-logo" />
               </a>
             </div>
-            <div className="all-players">
+            <div className="flex gap-7.5 mt-3.75">
               <div className="position-players">
                 <div className="position-name">Goalkeepers</div>
                 {players.map((player)=>{
@@ -76,7 +76,7 @@ export function Footer(){
                 })}
               </div>
             </div>
-            <div className="copyright">
+            <div className="text-white text-2xl absolute font-bold -bottom-20 left-8">
               Created By BOMJ
             </div>
           </div>

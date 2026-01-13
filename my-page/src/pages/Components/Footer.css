@@ -1,43 +1,5 @@
 .footer{
-    width: 100vw;
-    height: 90vh;
-    background-color:rgb(24, 23, 51);
-    position: absolute;
     top: var(--footer-offset);
-}
-.site-logo{
-    height: 20vh;
-    padding-left: 40px;
-    padding-top: 20px;
-}
-.bottom-logo{
-    display: flex;
-    align-items: center;
-}
-.barca-name{
-    margin-left: 10px;
-    font-size: 29px;
-    color: white;
-    font-weight: 600;
-}
-hr{
-    width: 93vw;
-    height: 3px;
-    background-color: rgb(253, 197, 44);
-    border: none;
-}
-.social-media{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.follow-us{
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-}
-.medias{
-    margin-top: 10px;
 }
 .media-logo{
     margin: 5px;
@@ -48,29 +10,8 @@ hr{
     font-weight: 600;
     font-size: 17px;
 }
-.player-name{
-    text-decoration: none;
-    color: rgb(120, 120, 120);
-    margin-top: 10px;
-}
-.all-players{
-    display: flex;
-    gap: 30px;
-    margin-top: 15px;
-}
 .position-players{
     width: 150px;
     display: flex;
     flex-direction: column;
-}
-.player-name:hover{
-    color: #670a0a;
-}
-.copyright{
-    color: white;
-    font-size: 24px;
-    position: absolute;
-    font-weight: 600;
-    bottom: 10px;
-    left: 40px;
 }
