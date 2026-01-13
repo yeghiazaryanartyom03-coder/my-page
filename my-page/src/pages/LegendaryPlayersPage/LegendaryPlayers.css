@@ -1,0 +1,132 @@
+.legends-background-img{
+    background:url(/pictures/Legends-pictures/legends-background.jpg) top /cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 80vh;
+    -webkit-mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+    mask-image:linear-gradient(
+    to bottom,
+    black 55%,
+    rgba(0,0,0,0.7) 65%,
+    rgba(0,0,0,0.3) 75%,
+    transparent 100%
+    );
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+
+} 
+ 
+.legendary-players-footer{
+  --footer-offset: 5000px
+}
+.legends-title{
+  color: rgb(210, 215, 245);
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.legends-grid{
+  background-color: white;
+  border-radius: 30px 30px 0px 0px;
+  width: 95%;
+  height: 4470px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateY(-140px);
+}
+
+.legend{
+  transition: transform 0.5s ease,box-shadow 0.5s ease ;
+  border: solid rgb(234, 237, 241) 2px;
+  height: 290px;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.legend:hover{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transform: translateY(3px);
+  
+}
+.legend-img{
+  height: 130px;
+  width: 30vw;
+  object-fit: cover; 
+  object-position: top;
+  display: block;
+}
+.starting-text-legend{
+  opacity: 0;
+}
+
+.legend-name{
+  text-align: center;
+  font-weight: 800;
+  font-size: 20px;
+  padding: 4px;
+  color: rgb(35, 35, 35);
+}
+@media(min-width:980px){
+  .legend-img{
+    height: 195px;
+  }
+  .legend{
+    height: 305px;
+    transform: scale(0.95);
+  }
+}
+@media(min-width:1400px){
+  .legend-img{
+    height: 260px;
+    
+  }
+  .legend{
+    height: 320px;
+    transform: scale(0.98);
+  }
+  .legendary-players-footer{
+    --footer-offset: 5400px;
+  }
+  .legends-grid{
+    height: 4880px;
+  }
+  
+  .legend-info{
+    width: 100%;
+    background: white; 
+    transition: transform 0.3s ease ;
+    border: none;
+  }
+  .starting-text-legend{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    transform: translateY(100%);
+    background-color: white;
+    text-align: center;
+    color: rgb(46, 46, 46);
+    transition: transform 0.7s ease,opacity 0.35s ease;
+  }
+  .legend:hover .starting-text-legend{
+    opacity: 1;
+  }
+  .legend:hover .legend-info{
+    transform: translateY(-240%);
+  }
+}
