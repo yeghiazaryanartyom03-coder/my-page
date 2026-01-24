@@ -203,7 +203,7 @@ export const legends : legend[] = [
   {
     name: "Ladislava Kubala",
     startingText: "A legendary figure at the Club, Kubala (Budapest, Hungary, 1927 – Barcelona 2002) signed for FC Barcelona in June 1950, when he arrived with a team of refugee players from Eastern Europe called Hungaria", 
-    image: '/pictures/Legends-pictures/kubala.webp'
+    image: '/pictures/Legends-pictures/Kubala.webp'
   },
   {
     name: "Ricardo Zamora",

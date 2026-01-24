@@ -39,27 +39,7 @@
 .players-grid::-webkit-scrollbar{
     display: none;
 }
-.player-info-home-page::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,15,45,0) 0%,
-    rgba(10,15,45,0.8) 100%
-  );
-  z-index: 1;
-}
 
-.player-info-home-page > *{
-  z-index: 2;
-}
-.barca-stat-home-page{
-    text-align: center;
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
 .sponsers{
     background: linear-gradient(
     to bottom,

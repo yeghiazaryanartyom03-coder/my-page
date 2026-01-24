@@ -33,39 +33,40 @@ export function Matches(){
       <div className="matches-main-content">
           <div className="top-background-matches">
             <div className="latest-match">
-              <div className="latest-match-title">
+              <div className="text-white text-[25px] font-bold pt-5 pl-5">
                   Latest Match  
               </div>
-              <div className="latest-match-info">
-                <div className="latest-match-club">
+              <div className="h-75 flex items-center justify-between">
+                <div className="text-white flex flex-col justify-center items-center w-75">
                   <div className="latest-match-team-img-div">
-                    <img src={firstTeamImg} alt="" className="latest-match-team-img" />
+                    <img src={firstTeamImg} alt="" className="h-30" />
                   </div>
-                  <div className="latest-match-team-name">
+                  <div className="font-bold text-[38px]">
                     {firstTeam}
                   </div>
                 </div>  
-                <div className="latest-match-score-info">
+                <div className="text-white flex flex-col items-center w-50">
                   <div className="latest-match-tournament">
-                    <img src={tournament} alt="" className="latest-match-tournament-img"/>
+                    <img src={tournament} alt="" className="h-30"/>
                   </div>
-                  <div className="latest-match-score">
+                  <div className="latest-match-score font-semibold text-[38px] py-1 my-1 px-2.5
+                                  bg-linear-to-b from-[rgba(225,10,50,1)] to-[rgba(10,15,45,1)]">
                     {score}
                   </div>
                   
                 </div>
-                <div className="latest-match-club">
+                <div className="text-white flex flex-col justify-center items-center w-75">
                   <div className="latest-match-team-img-div">
-                    <img src={secondTeamImg} alt="" className="latest-match-team-img" />
+                    <img src={secondTeamImg} alt="" className="h-30" />
                   </div>
-                  <div className="latest-match-team-name">
+                  <div className="font-bold text-[38px]">
                     {secondTeam}
                   </div>
                 </div>
               </div> 
             </div>
           </div>
-          <div className="matches-result">
+          <div className="matches-result w-[95%] h-1890 bg-white mx-auto rounded-tl-[30px] rounded-tr-[30px]">
             {<MatchesGrid refTarget={refTarget} />}
           </div>
       </div>

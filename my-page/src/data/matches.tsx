@@ -268,6 +268,8 @@ export const matches:Match[] = [
     isInHome: false,
     image: '/pictures/club-logos/ESP.png',
     date: '01.03.26, 20:00',
+    goalBarca: 2,
+    goalApponent: 0,
   },
   {
     apponent: 'Athletic Club',
@@ -275,6 +277,16 @@ export const matches:Match[] = [
     tournament: 'Supercopa de Espana',
     isInHome: true,
     image: '/pictures/club-logos/ATH.png',
+    date: '01.07.26, 19:00',
+    goalBarca: 5,
+    goalApponent: 0,
+  },
+  {
+    apponent: 'Real Madrid',
+    stadium: 'Alinma Stadium',
+    tournament: 'Supercopa de Espana',
+    isInHome: true,
+    image: '/pictures/club-logos/RMD.png',
     date: '01.07.26, 19:00',
   },
   {

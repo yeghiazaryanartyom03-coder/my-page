@@ -10,8 +10,8 @@ export function MatchesGrid({refTarget}:MatchesGridProps) {
   
   return (
     <>
-      <div className="matches-title">TEAM CALENDAR</div>
-      <div className="matches-grid">
+      <div className="text-[30px] font-bold text-[rgb(10,15,55)] text-center pt-5">TEAM CALENDAR</div>
+      <div className="grid grid-cols-1">
         
         {matches.map((match,index)=>{
              return <Match index={index} match={match} refTarget={refTarget}/>
