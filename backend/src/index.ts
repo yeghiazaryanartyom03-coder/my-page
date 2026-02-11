@@ -1,33 +1,32 @@
 import express from 'express'
-import cors from 'cors'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose'
-
+import cors from 'cors'
+import { connectDB } from './db'
+import historyRouter from './routes/history'
+import playerRouter from './routes/players'
+import newsRouter from './routes/news'
+import legendRouter from './routes/legends'
+import matchRouter from './routes/matches'
+import itemRouter from './routes/items'
+import cartRouter from './routes/carts'
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors());
+app.use(cors())
 app.use(express.json())
 
-async function connectDB(){
-  try{
-    await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log('✅ Подключено к локальному MongoDB');
-    
-    // Проверка: выводим список баз данных
-    const dbs = await mongoose.connection.db.admin().listDatabases();
-    console.log('📁 Доступные базы:', dbs.databases.map((db: any) => db.name));
-  }catch(error){
-      console.log('error')
-  }
-}
 connectDB()
-app.get('api/hello',(req,res)=>{
-  res.json({message:'Hello from backend'});
-})
 
-app.listen(PORT,() => {
-  console.log(`server is running on http://localhost:${PORT}`)
+app.use('/api/history', historyRouter)
+app.use('/api/player', playerRouter)
+app.use('/api/news', newsRouter)
+app.use('/api/legend', legendRouter)
+app.use('/api/match', matchRouter)
+app.use('/api/items', itemRouter)
+app.use("/api/cart", cartRouter)
+
+app.listen(PORT,()=>{
+  console.log('server running')
 })
