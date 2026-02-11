@@ -1,11 +1,8 @@
 import { NavLink } from 'react-router';
-import {type legend} from '../../data/legends'
+import {type Legend } from './LegendsGrid';
 
-interface LegendProp{
-  legend:legend
-}
 
-export function Legend({legend}:LegendProp) {
+export function Legend({legend}:{legend:Legend}) {
   return (
     <>
       <NavLink to='/' className="legend border-solid border-[rgb(234,237,241)] border-2 h-72.5 w-[30vw] flex flex-col items-center mt-5 relative overflow-hidden
