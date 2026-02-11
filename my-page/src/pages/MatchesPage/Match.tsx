@@ -1,12 +1,14 @@
-import { type Match, matches } from "../../data/matches";
 import BarcaLogo from "../../assets/icons/barca-logo.png";
 import { useEffect, type RefObject } from "react";
+import type { IMatch } from "../../App";
+
 interface Prop {
-  match: Match;
+  matches: IMatch[]
+  match: IMatch;
   index: number;
   refTarget: RefObject<HTMLDivElement | null>;
 }
-export function Match({ match, index, refTarget }: Prop) {
+export function Match({matches, match, index, refTarget }: Prop) {
   useEffect(() => {
     refTarget.current?.scrollIntoView({
       behavior: "auto",
@@ -14,7 +16,7 @@ export function Match({ match, index, refTarget }: Prop) {
     });
   }, []);
 
-  function getTournament(match: Match) {
+  function getTournament(match: IMatch) {
     if (match.tournament === "La Liga") {
       return "la-liga";
     } else if (match.tournament === "Champions League") {
@@ -26,7 +28,7 @@ export function Match({ match, index, refTarget }: Prop) {
     }
   }
 
-  function getScore(match: Match) {
+  function getScore(match: IMatch) {
     if (match.goalBarca !== undefined && match.isInHome) {
       return <>{`${match.goalBarca} : ${match.goalApponent}`}</>;
     } else if (match.goalBarca !== undefined && !match.isInHome) {
@@ -47,10 +49,8 @@ export function Match({ match, index, refTarget }: Prop) {
               ? refTarget
               : null
           }
-          className="flex flex-row justify-around items-center gap-10 mt-10
-                   "
-        >
-          <div className="flex flex-col items-center w-25 first-club">
+          className="flex flex-row justify-around items-center gap-10 mt-10">
+          <div className="first-club flex flex-col items-center w-25 first-club">
             <img
               src={match.isInHome === true ? BarcaLogo : match.image}
               className="h-15 first-club-img"
@@ -60,13 +60,15 @@ export function Match({ match, index, refTarget }: Prop) {
             </div>
           </div>
           <div className=" flex flex-col items-center -translate-y-3">
-            <div className=" flex flex-col items-center w-25 tournament-img-div">
+            <div className="flex flex-col items-center w-25 tournament-img-div">
               <img
                 src={`/pictures/club-logos/${getTournament(match)}.png`}
-                className="h-12.5"
+                className="tournament-img h-12.5"
               />
             </div>
-            <div className="text-xl font-semibold pb-7  text-white bg-[rgb(10,15,55)] h-7.5 w-12.5 pt-1 text-center flex justify-center bg-linear-to-b from-[rgba(34,61,210,0.8)] to-[rgba(10,15,45,1)]">{getScore(match)}</div>
+            <div className="text-xl font-semibold pb-7  text-white 
+                          bg-[rgb(10,15,55)] h-7.5 w-12.5 pt-1 text-center flex justify-center 
+                            bg-linear-to-b from-[rgba(34,61,210,0.8)] to-[rgba(10,15,45,1)]">{getScore(match)}</div>
           </div>
           <div className="flex flex-col items-center w-25 second-club">
             <img

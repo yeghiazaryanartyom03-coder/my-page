@@ -1,8 +1,8 @@
-import { players} from "../../data/players";
+import type { IPlayer } from "../../App";
 import { Player } from "./Player";
 
 
-export function FirstTeamPart() {
+export function FirstTeamPart({players}:{players:IPlayer[]}) {
 
 
   return (

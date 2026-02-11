@@ -1,30 +1,4 @@
 .matches-footer{
   --footer-offset: 8100px
 }
-.top-background-matches{
 
-background:url(/pictures/club-logos/background.jpg) top /cover no-repeat;
-    
-    width: 100vw;
-    height: 60vh;
-    -webkit-mask-image:linear-gradient(
-    to bottom,
-    black 55%,
-    rgba(0,0,0,0.7) 65%,
-    rgba(0,0,0,0.3) 75%,
-    transparent 100%
-    );
-    mask-image:linear-gradient(
-    to bottom,
-    black 55%,
-    rgba(0,0,0,0.7) 65%,
-    rgba(0,0,0,0.3) 75%,
-    transparent 100%
-    );
-
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: cover;
-    mask-size: cover;
-
-}

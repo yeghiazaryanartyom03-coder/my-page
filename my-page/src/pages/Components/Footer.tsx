@@ -4,11 +4,34 @@ import InstagramLogo from "../../assets/icons/instagram-icon.png";
 import XLogo from "../../assets/icons/x-icon.png";
 import YoutubeLogo from "../../assets/icons/youtube-icon.png";
 import TiktokLogo from "../../assets/icons/tik-tok-icon.png";
-import { players } from "../../data/players";
 import './Footer.css'
 import { PlayerName } from "./PlayerName";
+import { useState, useEffect } from "react";
+import type { Players } from "../FirstTeamPage/FirstTeam";
+import axios from "axios";
+
 
 export function Footer(){
+
+  const [players, setPlayers] = useState<Players[]>([])
+
+  useEffect(()=>{
+    const fetchHistory = async () => {
+      try{
+        const response = await axios.get('http://localhost:5000/api/player')
+        console.log(response.data)
+        setPlayers(response.data)
+        
+      }catch(error){
+         console.log(error) 
+      }
+    }
+
+    fetchHistory()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+
   return(
     <div className="footer w-screen h-155 bg-[rgb(24,23,51)] absolute">
         <div className="footer-grid relative">

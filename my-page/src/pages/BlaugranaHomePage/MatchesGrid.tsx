@@ -1,6 +1,7 @@
 import { MatchHomePage } from "./MatchHomePage";
-import { matches } from "../../data/matches";
-export function MatchesGrid() {
+import type { IMatch } from "../../App";
+
+export function MatchesGrid({matches}:{matches:IMatch[]}) {
   return (
     <>
       <div className="text-3xl font-bold text-[rgb(9,15,45)]">Next Matches</div>

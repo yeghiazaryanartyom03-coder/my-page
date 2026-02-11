@@ -1,11 +1,13 @@
 import { NavLink } from 'react-router';
-import type {History} from '../../data/historys'
 
-interface Prop{
-  history: History
+interface History {
+  _id: string;
+  image: string,
+  title: string,
+  startingText: string
 }
 
-export function HistoryContent({history}: Prop) {
+export function HistoryContent({story}: {story:History}) {
   return (
     <NavLink to='/legend' className="border-2 border-[rgb(234,237,241)] group
                                      h-72.5 w-[30vw]
@@ -15,21 +17,23 @@ export function HistoryContent({history}: Prop) {
                                      hover:translate-y-0.75
                                      lg:h-76.25 lg:scale-95
                                      xl:h-80 xl:scale-98">
-      <img src={history.image} className="h-42.5 w-[30vw] object-cover block
+      <div className=" h-37.5">
+        <img src={story.image} className="h-37.5 w-[30vw] object-cover block
                                           lg:h-48.75 lg:w-[32vw]
 
                                           xl:h-65 xl:w-[40vw]" />
+      </div>
         <div className="
                         xl:absolute xl:bottom-0 xl:w-full xl:bg-white xl:border-none xl:transition-transform xl:duration-300 xl:ease-in-out
                         xl:group-hover:-translate-y-[260%]">
           <div className="text-center font-extrabold text-xl p-1 text-[rgb(35,35,35)]">
-            {history.title}
+            {story.title}
           </div>
           <div className="opacity-0
                           opacity-duration
                           xl:group-hover:opacity-100
                           xl:absolute xl:bottom-0 xl:h-25 xl:w-full xl:translate-y-full xl:bg-white xl:text-center xl:text-[rgb(46,46,46)]">
-             {history.startingText} 
+             {story.startingText} 
           </div>  
         </div>       
         

@@ -1,6 +1,5 @@
 import { NavLink } from "react-router"
-import { type Players } from "../../data/players"
-
+import type { Players } from "../FirstTeamPage/FirstTeam"
 interface Props{
   player:Players
   variant:string

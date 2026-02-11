@@ -1,10 +1,45 @@
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
 import "./FirstTeam.css";
-import { players } from "../../data/players";
+import { useState, useEffect } from "react";
 import { Player } from "../BlaugranaHomePage/Player";
+import axios from "axios";
+
+export interface Players{
+  name: string,
+  surname: string,
+  shirtNumber: number,
+  appearances: number,
+  position: string,
+  image: string,
+  goals?: number,
+  assists?: number,
+  cleanSheets?: number,
+  saves?:number,
+}
 
 export function FirstTeam() {
+
+  const [players, setPlayers] = useState<Players[]>([])
+
+  useEffect(()=>{
+    const fetchHistory = async () => {
+      try{
+        const response = await axios.get('http://localhost:5000/api/player')
+        console.log(response.data)
+        setPlayers(response.data)
+        
+      }catch(error){
+         console.log(error) 
+      }
+    }
+
+    fetchHistory()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+
+
   return (
     <>
       <Header />

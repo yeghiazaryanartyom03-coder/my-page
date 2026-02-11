@@ -1,7 +1,7 @@
-import { news } from "../../data/news";
+import type { INews } from "../../App";
 import { News } from "./News";
 
-export function NewsGrid() {
+export function NewsGrid({news}:{news:INews[]}) {
   return (
     <>
       <div className="part-title text-[rgb(9,15,45)] text-xl font-bold tracking-wide mt-2.5  relative
