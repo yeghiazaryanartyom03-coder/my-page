@@ -3,11 +3,21 @@ import { ShopHeader } from "./ShopHomePage/shopComponents/ShopHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { ServerItem } from "./ShopHomePage";
+import { CheckoutItem } from "./CheckoutItem";
+
+type ShippingMethod = 'standard' | 'express' | 'free';
+
+const shippingCosts: Record<ShippingMethod, number> = {
+  standard: 5,   // $5
+  express: 10,   // $10
+  free: 0,       // $0
+};
 
 export function ShopCart() {
   const [searchParams] = useSearchParams();
   const cartId = searchParams.get("cartId");
-  const [cartItems,setCartItems] = useState<{success: boolean, items:ServerItem[]}>()
+  const [cartItems,setCartItems] = useState<ServerItem[]>()
+  const [shippingSelections,setShippingSelections] = useState<Record<string,ShippingMethod>>({})
 
   useEffect(() => {
     const cartFetch = async () => {
@@ -15,7 +25,13 @@ export function ShopCart() {
       try {
         const response = await axios.get(
           `http://localhost:5000/api/cart/${cartId}`);
-        setCartItems(response.data)
+        setCartItems(response.data.items)
+
+         const initialShipping: Record<string, ShippingMethod> = {};
+      response.data.items.forEach((item: ServerItem) => {
+        initialShipping[item.id] = item.shippingMethod || 'standard';
+      });
+      setShippingSelections(initialShipping);
         
       } catch (error) {
         console.log(error);
@@ -25,7 +41,48 @@ export function ShopCart() {
       cartFetch();    
       }
     
-  }, []);
+  }, [cartId]);
+
+  const handleShippingChange = async (itemId: string, method: ShippingMethod) => {
+    // Оптимистично обновляем UI
+    setShippingSelections(prev => ({ ...prev, [itemId]: method }));
+
+    // Отправляем запрос на сервер
+    try {
+      await axios.patch(`http://localhost:5000/api/cart/${cartId}/item/${itemId}`, {
+        shippingMethod: method,
+      });
+    } catch (error) {
+      console.error('Ошибка обновления доставки:', error);
+      // В случае ошибки можно вернуть предыдущее значение
+      setShippingSelections(prev => ({ ...prev, [itemId]: prev[itemId] }));
+    }
+  };
+
+  const handleQuantityChange = async (itemId:string, newQuantity:number) =>{
+    
+    const previousItems = cartItems
+
+    setCartItems(prev =>
+      prev.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item
+    )
+  );
+
+    try{
+      await axios.patch(`http://localhost:5000/api/cart/${cartId}/item/${itemId}`, {
+        quantity: newQuantity,
+      });
+    }catch(error){
+      console.log(error)
+
+      setCartItems(previousItems)
+    }
+  }
+
+  const handleRemoveItem = (itemId: string) => {
+    setCartItems(prev => prev?.filter(item => item.id !== itemId));
+  };
+
   if (!cartId) {
     return <div>Cart ID is missing</div>;
   }
@@ -40,174 +97,18 @@ export function ShopCart() {
         <div className="grid gap-10 lg:grid-cols-3">
           {/* ---------- ТОВАРЫ ---------- */}
           <div className="lg:col-span-2 space-y-4">
-            {/* Товар 1 */}
-            <div
-              className="flex flex-col sm:flex-row gap-6 p-4 rounded-2xl
-                      bg-white/5 backdrop-blur-sm border border-white/10"
-            >
-              <img
-                src="/item.jpg"
-                alt="Product name"
-                className="w-full sm:w-28 h-52 sm:h-28 object-cover rounded-xl"
-              />
-
-              <div className="flex flex-1 flex-col justify-between">
-                <div>
-                  <h2 className="text-lg font-semibold text-white">
-                    Product Name
-                  </h2>
-                  <p className="text-[#A50044] font-semibold mt-1">$120</p>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-4 mt-4">
-                  {/* Количество */}
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      aria-label="Decrease quantity"
-                      className="w-8 h-8 flex items-center justify-center
-                         border border-neutral-600 rounded-lg
-                         hover:border-[#004D98] hover:text-[#004D98]
-                         focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         transition cursor-pointer"
-                    >
-                      −
-                    </button>
-                    <span className="text-white font-medium min-w-[1.5rem] text-center">
-                      1
-                    </span>
-                    <button
-                      type="button"
-                      aria-label="Increase quantity"
-                      className="w-8 h-8 flex items-center justify-center
-                         border border-neutral-600 rounded-lg
-                         hover:border-[#004D98] hover:text-[#004D98]
-                         focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         transition cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  {/* Выбор доставки */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-neutral-400">Shipping:</span>
-                    <select
-                      aria-label="Shipping method"
-                      defaultValue="standard"
-                      className="bg-transparent border border-neutral-600 rounded-lg px-2 py-1
-                         text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         cursor-pointer"
-                    >
-                      <option value="standard" className="bg-[rgb(10,15,45)]">
-                        Standard ($5)
-                      </option>
-                      <option value="express" className="bg-[rgb(10,15,45)]">
-                        Express ($10)
-                      </option>
-                      <option value="free" className="bg-[rgb(10,15,45)]">
-                        Free ($0)
-                      </option>
-                    </select>
-                  </div>
-
-                  {/* Удалить */}
-                  <button
-                    type="button"
-                    aria-label="Remove item"
-                    className="text-neutral-400 hover:text-[#A50044] transition font-medium
-                       focus:outline-none focus:text-[#A50044] cursor-pointer"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Товар 2 */}
-            <div
-              className="flex flex-col sm:flex-row gap-6 p-4 rounded-2xl
-                      bg-white/5 backdrop-blur-sm border border-white/10"
-            >
-              <img
-                src="/item2.jpg"
-                alt="Another product"
-                className="w-full sm:w-28 h-52 sm:h-28 object-cover rounded-xl"
-              />
-
-              <div className="flex flex-1 flex-col justify-between">
-                <div>
-                  <h2 className="text-lg font-semibold text-white">
-                    Another Item
-                  </h2>
-                  <p className="text-[#A50044] font-semibold mt-1">$120</p>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-4 mt-4">
-                  {/* Количество */}
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      aria-label="Decrease quantity"
-                      className="w-8 h-8 flex items-center justify-center
-                         border border-neutral-600 rounded-lg
-                         hover:border-[#004D98] hover:text-[#004D98]
-                         focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         transition cursor-pointer"
-                    >
-                      −
-                    </button>
-                    <span className="text-white font-medium min-w-[1.5rem] text-center">
-                      2
-                    </span>
-                    <button
-                      type="button"
-                      aria-label="Increase quantity"
-                      className="w-8 h-8 flex items-center justify-center
-                         border border-neutral-600 rounded-lg
-                         hover:border-[#004D98] hover:text-[#004D98]
-                         focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         transition cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  {/* Выбор доставки — Express для разнообразия */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-neutral-400">Shipping:</span>
-                    <select
-                      aria-label="Shipping method"
-                      defaultValue="express"
-                      className="bg-transparent border border-neutral-600 rounded-lg px-2 py-1
-                         text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#004D98]
-                         cursor-pointer"
-                    >
-                      <option value="standard" className="bg-[rgb(10,15,45)]">
-                        Standard ($5)
-                      </option>
-                      <option value="express" className="bg-[rgb(10,15,45)]">
-                        Express ($10)
-                      </option>
-                      <option value="free" className="bg-[rgb(10,15,45)]">
-                        Free ($0)
-                      </option>
-                    </select>
-                  </div>
-
-                  {/* Удалить */}
-                  <button
-                    type="button"
-                    aria-label="Remove item"
-                    className="text-neutral-400 hover:text-[#A50044] transition font-medium
-                       focus:outline-none focus:text-[#A50044] cursor-pointer"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+            {/* Товар vse */}
+          {cartItems===undefined || cartItems.map((cartItem)=>{
+            
+            return <CheckoutItem key={cartItem.id} 
+                                 cartItem={cartItem} 
+                                 cartId={cartId} 
+                                 onRemove={handleRemoveItem} 
+                                 onShippingChange={handleShippingChange} 
+                                 selectedShipping={shippingSelections[cartItem.id] || 'standard'}
+                                 onQuantityChange={handleQuantityChange}/>
+          })}
+        </div>
 
           {/* ---------- ИТОГ ---------- */}
           <div className="lg:sticky lg:top-10 h-fit">

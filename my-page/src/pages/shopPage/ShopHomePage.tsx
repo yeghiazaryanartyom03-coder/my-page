@@ -21,6 +21,7 @@ interface Iitem {
 
 export interface ServerItem extends Iitem {
   quantity: number;
+  shippingMethod: "standard" | "express" | "free"
 }
 
 interface CartItem {
