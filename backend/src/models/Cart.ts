@@ -1,4 +1,3 @@
-
 import { Schema, model, Document } from "mongoose";
 
 export interface ICart extends Document {
@@ -6,9 +5,11 @@ export interface ICart extends Document {
   items: {
     itemId: string;
     quantity: number;
+    shippingMethod: "standard" | "express" | "free";
   }[];
+
   expiresAt?: Date;
-  updatedAt?: Date
+  updatedAt?: Date;
 }
 
 const cartSchema = new Schema<ICart>(
@@ -29,11 +30,17 @@ const cartSchema = new Schema<ICart>(
           type: Number,
           default: 1,
         },
+        shippingMethod: {
+          type: String,
+          default: "standard",
+          enum: ["standard", "express", "free"],
+        },
       },
     ],
-    expiresAt:{
+
+    expiresAt: {
       type: Date,
-      default: () => new Date(Date.now() + 30*24*60*60*1000),
+      default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     },
   },
   {
@@ -41,7 +48,6 @@ const cartSchema = new Schema<ICart>(
   },
 );
 
-
-cartSchema.index({expiresAt: 1},{expireAfterSeconds:0})
+cartSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export const Cart = model<ICart>("Cart", cartSchema);
