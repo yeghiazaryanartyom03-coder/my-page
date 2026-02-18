@@ -3,12 +3,12 @@ import { useEffect, type RefObject } from "react";
 import type { IMatch } from "../../App";
 
 interface Prop {
-  matches: IMatch[]
+  matches: IMatch[];
   match: IMatch;
   index: number;
   refTarget: RefObject<HTMLDivElement | null>;
 }
-export function Match({matches, match, index, refTarget }: Prop) {
+export function Match({ matches, match, index, refTarget }: Prop) {
   useEffect(() => {
     refTarget.current?.scrollIntoView({
       behavior: "auto",
@@ -30,9 +30,9 @@ export function Match({matches, match, index, refTarget }: Prop) {
 
   function getScore(match: IMatch) {
     if (match.goalBarca !== undefined && match.isInHome) {
-      return <>{`${match.goalBarca} : ${match.goalApponent}`}</>;
+      return <>{`${match.goalBarca} : ${match.goalopponent}`}</>;
     } else if (match.goalBarca !== undefined && !match.isInHome) {
-      return <>{`${match.goalApponent} : ${match.goalBarca}`}</>;
+      return <>{`${match.goalopponent} : ${match.goalBarca}`}</>;
     } else {
       return "VS";
     }
@@ -40,8 +40,10 @@ export function Match({matches, match, index, refTarget }: Prop) {
 
   return (
     <>
-      <div className="after:content-['']
-                   after:flex after:w-[90%] after:h-0.5 after:bg-[rgb(10,15,55)] after:mx-auto after:mt-5">
+      <div
+        className="after:content-['']
+                   after:flex after:w-[90%] after:h-0.5 after:bg-[rgb(10,15,55)] after:mx-auto after:mt-5"
+      >
         <div
           ref={
             matches[index].goalBarca !== undefined &&
@@ -49,14 +51,15 @@ export function Match({matches, match, index, refTarget }: Prop) {
               ? refTarget
               : null
           }
-          className="flex flex-row justify-around items-center gap-10 mt-10">
+          className="flex flex-row justify-around items-center gap-10 mt-10"
+        >
           <div className="first-club flex flex-col items-center w-25 first-club">
             <img
               src={match.isInHome === true ? BarcaLogo : match.image}
               className="h-15 first-club-img"
             />
             <div className="font-semibold text-[rgb(10,15,55)] text-center">
-              {match.isInHome ? "FC Barcelona" : match.apponent}
+              {match.isInHome ? "FC Barcelona" : match.opponent}
             </div>
           </div>
           <div className=" flex flex-col items-center -translate-y-3">
@@ -66,9 +69,13 @@ export function Match({matches, match, index, refTarget }: Prop) {
                 className="tournament-img h-12.5"
               />
             </div>
-            <div className="text-xl font-semibold pb-7  text-white 
+            <div
+              className="text-xl font-semibold pb-7  text-white 
                           bg-[rgb(10,15,55)] h-7.5 w-12.5 pt-1 text-center flex justify-center 
-                            bg-linear-to-b from-[rgba(34,61,210,0.8)] to-[rgba(10,15,45,1)]">{getScore(match)}</div>
+                            bg-linear-to-b from-[rgba(34,61,210,0.8)] to-[rgba(10,15,45,1)]"
+            >
+              {getScore(match)}
+            </div>
           </div>
           <div className="flex flex-col items-center w-25 second-club">
             <img
@@ -76,7 +83,7 @@ export function Match({matches, match, index, refTarget }: Prop) {
               className="h-15 second-team-img"
             />
             <div className="font-semibold text-[rgb(10,15,55)] text-center">
-              {match.isInHome ? match.apponent : "FC Barcelona"}
+              {match.isInHome ? match.opponent : "FC Barcelona"}
             </div>
           </div>
         </div>
