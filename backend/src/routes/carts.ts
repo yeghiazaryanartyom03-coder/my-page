@@ -65,7 +65,8 @@ router.post("/add", async(req,res)=>{
         // Новый товар - добавляем
         cart.items.push({
           itemId: newItem.itemId,
-          quantity: newItem.quantity || 1
+          quantity: newItem.quantity || 1,
+          shippingMethod: 'standard'
         });
       }
     }
@@ -100,7 +101,8 @@ router.get("/:cartId",async (req,res) => {
 
       return {
         ...item.toObject(),
-        quantity: cartItem.quantity
+        quantity: cartItem.quantity,
+        shippingMethod: cartItem.shippingMethod
       }
     })
 
@@ -110,6 +112,46 @@ router.get("/:cartId",async (req,res) => {
     res.status(500).json({success: false ,error: 'Server error' })
   }
 })
+
+router.patch("/:cartId/item/:itemId", async (req, res) => {
+  try {
+    const { cartId, itemId } = req.params;
+    const { quantity, shippingMethod } = req.body;
+
+    const cart = await Cart.findOne({ cartId });
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found' });
+    }
+
+    const itemIndex = cart.items.findIndex(item => item.itemId === itemId);
+    if (itemIndex === -1) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+
+    if (quantity !== undefined) {
+      if (quantity < 1) {
+        return res.status(400).json({ error: 'Quantity must be at least 1' });
+      }
+      cart.items[itemIndex].quantity = quantity;
+    }
+
+    if (shippingMethod) {
+      const allowed = ['standard', 'express', 'free'];
+      if (!allowed.includes(shippingMethod)) {
+        return res.status(400).json({ error: 'Invalid shipping method' });
+      }
+      cart.items[itemIndex].shippingMethod = shippingMethod;
+    }
+
+    await cart.save();
+    res.json({ success: true, updatedItem: cart.items[itemIndex] });
+  } catch (error) {
+    console.error('Error updating cart item:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 
 router.delete("/remove", async (req, res) => {
   try {

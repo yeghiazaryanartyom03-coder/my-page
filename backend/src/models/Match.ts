@@ -1,53 +1,52 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface IMatch extends 
-Document {
-  apponent: string,
-  stadium: string,
-  tournament: string,
-  image: string,
-  isInHome: boolean,
-  date: string,
-  goalBarca?: number,
-  goalApponent?: number,
+export interface IMatch extends Document {
+  opponent: string;
+  stadium: string;
+  tournament: string;
+  image: string;
+  isInHome: boolean;
+  date: string;
+  goalBarca?: number;
+  goalopponent?: number;
 }
 
 const matchSchema = new Schema<IMatch>(
   {
-    apponent:{
+    opponent: {
       type: String,
-      required: true
+      required: true,
     },
     stadium: {
-      type:String,
-      required: true
-    },
-    tournament:{
       type: String,
-      required: true
+      required: true,
     },
-    image:{
+    tournament: {
       type: String,
-      required: true
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
     },
     isInHome: {
       type: Boolean,
-      required: true
+      required: true,
     },
-    date:{
+    date: {
       type: String,
-      required: true
+      required: true,
     },
-    goalBarca:{
-      type: Number
+    goalBarca: {
+      type: Number,
     },
-    goalApponent:{
-      type: Number
+    goalopponent: {
+      type: Number,
     },
   },
   {
-    timestamps:true
-  }
-)
+    timestamps: true,
+  },
+);
 
-export const Match = model<IMatch>('Match', matchSchema)
+export const Match = model<IMatch>("Match", matchSchema);
