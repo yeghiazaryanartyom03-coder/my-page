@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router';
-import {type Legend } from './LegendsGrid';
+import type { ILegend } from '../../types';
 
 
-export function Legend({legend}:{legend:Legend}) {
+export function Legend({legend}:{legend:ILegend}) {
   return (
     <>
-      <NavLink to='/' className="legend border-solid border-[rgb(234,237,241)] border-2 h-72.5 w-[30vw] flex flex-col items-center mt-5 relative overflow-hidden
+      <NavLink to={`/legendary-players/legend?legendId=${legend._id}`} className="legend border-solid border-[rgb(234,237,241)] border-2 h-72.5 w-[30vw] flex flex-col items-center mt-5 relative overflow-hidden
                       hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:translate-y-0.75 group
                       transition-all duration-500 ease-in-out
                       lg:h-76.25 lg:scale-95
