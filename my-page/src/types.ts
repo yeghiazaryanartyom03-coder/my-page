@@ -21,7 +21,7 @@ export interface INews {
 export interface IPlayer{
   _id:string;
   name: string;
-  surname?: string;
+  surname: string;
   shirtNumber: number;
   age: number;
   nationality: string;

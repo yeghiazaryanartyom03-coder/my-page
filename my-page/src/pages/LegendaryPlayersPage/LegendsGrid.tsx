@@ -13,7 +13,6 @@ export function LegendsGrid() {
     }
   }, [dispatch, legends.length]);
 
-  console.log(legends);
   if (loading) return <div>Загрузка матчей...</div>;
   if (error) return <div>Ошибка: {error}</div>;
   if (!legends.length) return <div>Нет данных о матчах</div>;

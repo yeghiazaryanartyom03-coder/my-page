@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 
 export interface IPlayer extends Document {
   name: string;
-  surname?: string;
+  surname: string;
   shirtNumber: number;
   age: number;
   nationality: string;
@@ -33,7 +33,7 @@ export interface IPlayer extends Document {
 
 const PlayerSchema = new Schema<IPlayer>({
   name: { type: String, required: true },
-  surname: { type: String }, // optional, so no required
+  surname: { type: String, required: true}, // optional, so no required
   shirtNumber: { type: Number, required: true },
   age: { type: Number, required: true },
   nationality: { type: String, required: true },
