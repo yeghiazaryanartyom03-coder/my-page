@@ -4,12 +4,9 @@ import { FirstTeamPart } from "./FirstTeamPart";
 import { MatchesGrid } from "./MatchesGrid";
 import { NewsGrid } from "./NewsGrid";
 import { Footer } from "../Components/Footer";
-import type{ IMatch, IPlayer, INews } from "../../App";
 
 
-
-export function BlaugranaHomePage({matches, news, players}:{matches:IMatch[]; news:INews[]; players:IPlayer[]}) {
-  console.log(matches)
+export function BlaugranaHomePage() {
   
   return (
     <>
@@ -20,14 +17,14 @@ export function BlaugranaHomePage({matches, news, players}:{matches:IMatch[]; ne
         </div>
         <div className="bg-[rgb(9,15,45)] flex flex-col w-full relative ">
           <div className="flex-col flex p-5 bg-white h-[56vh] w-[95vw] rounded-4xl mx-auto px-4  z-1004 transform-">
-            <MatchesGrid matches={matches}/>
+            <MatchesGrid />
           </div>
           <div className="flex flex-col items-center justify-center h-full bg-white mx-10 border-t-[3px] border-b-[3px] z-1005 border-[#81040b] xl:justify-start relative">
-            <NewsGrid news={news}/>
+            <NewsGrid />
           </div>
 
           <div className=" bottom w-[95vw] h-[60vh] bg-white mr-auto rounded-tr-[20px] rounded-br-[20px] grid justify-items-center z-1008" >
-            <FirstTeamPart players={players}/>
+            <FirstTeamPart />
           </div>
           <div className="sponsers flex gap-6.25 justify-center items-center w-screen h-[30vh]">
             <div className="text-white text-2xl font-extrabold">MAIN PARTNERS</div>

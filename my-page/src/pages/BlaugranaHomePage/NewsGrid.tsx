@@ -1,7 +1,24 @@
-import type { INews } from "../../App";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { News } from "./News";
+import { fetchNews } from "../../store/slice/newsSlice";
 
-export function NewsGrid({news}:{news:INews[]}) {
+
+
+export function NewsGrid() {
+  const dispatch = useAppDispatch()
+  const {news, loading, error} = useAppSelector((state) => state.news)
+
+  useEffect(() => {
+    if(news.length === 0){
+      dispatch(fetchNews())
+    }
+  },[dispatch,news.length])
+  
+  if (loading) return <div>Загрузка матчей...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
+  if (!news.length) return <div>Нет данных о матчах</div>;
+
   return (
     <>
       <div className="part-title text-[rgb(9,15,45)] text-xl font-bold tracking-wide mt-2.5  relative
