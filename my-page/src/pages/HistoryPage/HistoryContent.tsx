@@ -1,15 +1,10 @@
 import { NavLink } from 'react-router';
+import { type IHistory } from '../../types';
 
-interface History {
-  _id: string;
-  image: string,
-  title: string,
-  startingText: string
-}
 
-export function HistoryContent({story}: {story:History}) {
+export function HistoryContent({story}: {story:IHistory}) {
   return (
-    <NavLink to='/legend' className="border-2 border-[rgb(234,237,241)] group
+    <NavLink to={`/history/partofhistory?historyId=${story._id}`} className="border-2 border-[rgb(234,237,241)] group
                                      h-72.5 w-[30vw]
                                      flex flex-col items-center mt-5 relative overflow-hidden no-underline
                                      transition-all duration-500 ease-in-out
