@@ -8,7 +8,7 @@ export interface IMatch extends Document {
   isInHome: boolean;
   date: string;
   goalBarca?: number;
-  goalopponent?: number;
+  goalOpponent?: number;
 }
 
 const matchSchema = new Schema<IMatch>(
@@ -40,7 +40,7 @@ const matchSchema = new Schema<IMatch>(
     goalBarca: {
       type: Number,
     },
-    goalopponent: {
+    goalOpponent: {
       type: Number,
     },
   },

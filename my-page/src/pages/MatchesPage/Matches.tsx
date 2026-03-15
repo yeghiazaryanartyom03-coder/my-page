@@ -9,8 +9,8 @@ export function Matches(){
   return(
     <>
       <Header />
-      <div className="matches-main-content pt-10">
-          <div className="matches-result w-[95%] h-1990 bg-white mx-auto rounded-tl-[30px] rounded-tr-[30px]">
+      <div className="matches-main-content pt-10 mt-15">
+          <div className="matches-result w-[95%] h-2060 bg-white mx-auto rounded-tl-[30px] rounded-tr-[30px]">
             {<MatchesGrid/>}
           </div>
       </div>

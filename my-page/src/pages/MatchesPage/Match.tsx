@@ -1,6 +1,7 @@
 import BarcaLogo from "../../assets/icons/barca-logo.png";
 import { useEffect, type RefObject } from "react";
-import type { IMatch } from "../../App";
+import type { IMatch } from "../../types";
+import { NavLink } from "react-router";
 
 interface Prop {
   matches: IMatch[];
@@ -30,9 +31,9 @@ export function Match({ matches, match, index, refTarget }: Prop) {
 
   function getScore(match: IMatch) {
     if (match.goalBarca !== undefined && match.isInHome) {
-      return <>{`${match.goalBarca} : ${match.goalopponent}`}</>;
+      return <>{`${match.goalBarca} : ${match.goalOpponent}`}</>;
     } else if (match.goalBarca !== undefined && !match.isInHome) {
-      return <>{`${match.goalopponent} : ${match.goalBarca}`}</>;
+      return <>{`${match.goalOpponent} : ${match.goalBarca}`}</>;
     } else {
       return "VS";
     }
@@ -40,7 +41,7 @@ export function Match({ matches, match, index, refTarget }: Prop) {
 
   return (
     <>
-      <div
+      <NavLink to={`/matches/matchinfo?matchId=${match._id}`}
         className="after:content-['']
                    after:flex after:w-[90%] after:h-0.5 after:bg-[rgb(10,15,55)] after:mx-auto after:mt-5"
       >
@@ -87,7 +88,7 @@ export function Match({ matches, match, index, refTarget }: Prop) {
             </div>
           </div>
         </div>
-      </div>
+      </NavLink>
     </>
   );
 }

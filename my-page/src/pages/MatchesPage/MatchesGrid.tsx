@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
-import type { IMatch } from "../../App";
+import { useRef, useEffect, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchMatches } from "../../store/slice/matchesSlice";
+import type { IMatch } from "../../types";
 import { Match } from "./Match";
-import axios from "axios";
 import BarcaIcon from "../../assets/icons/barca-logo.png";
 
 function getTournament(match: IMatch) {
@@ -17,41 +18,31 @@ function getTournament(match: IMatch) {
 }
 
 export function MatchesGrid() {
-  const [matchedMatch, setMatchedMatch] = useState<IMatch | null>(null);
-  const [matches, setMatches] = useState<IMatch[]>([]);
+  const dispatch = useAppDispatch();
+  const { matches, loading, error } = useAppSelector((state) => state.matches);
   const refTarget = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const fetchMatches = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/match");
-        console.log(response.data);
-        setMatches(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (matches.length === 0) {
+      dispatch(fetchMatches());
+    }
+  }, [dispatch, matches.length]);
 
-    fetchMatches();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const findLatestMatch = (): IMatch | null => {
+  const latestMatch = useMemo(() => {
+    if (!matches.length) return null;
     for (let i = 0; i < matches.length; i++) {
-      if (matches[i].goalopponent === undefined) {
-        return matches.length ? matches[--i] : null;
+      if (matches[i].goalOpponent === undefined) {
+        return matches[--i];
       }
     }
-
-    return matches[0];
-  };
-  useEffect(() => {
-    if (!matches.length) return;
-    const latest = findLatestMatch();
-    setMatchedMatch(latest);
+    return null;
   }, [matches]);
-  if (!matchedMatch) {
-    return <div>loading...</div>;
-  }
+
+  if (loading) return <div>Загрузка матчей...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
+  if (!latestMatch) return <div> hello</div>;
+  if (!matches.length) return <div>Нет данных о матчах</div>;
+
   return (
     <>
       <div className="top-background-matches">
@@ -63,19 +54,19 @@ export function MatchesGrid() {
             <div className="text-white flex flex-col justify-center items-center w-75">
               <div className="latest-match-team-img-div">
                 <img
-                  src={matchedMatch.isInHome ? BarcaIcon : matchedMatch.image}
+                  src={latestMatch.isInHome ? BarcaIcon : latestMatch.image}
                   alt=""
                   className="h-30"
                 />
               </div>
               <div className="font-bold text-[38px]">
-                {matchedMatch.isInHome ? "Barcelona" : matchedMatch.opponent}
+                {latestMatch.isInHome ? "Barcelona" : latestMatch.opponent}
               </div>
             </div>
             <div className="text-white flex flex-col items-center w-50">
               <div className="latest-match-tournament">
                 <img
-                  src={`/pictures/club-logos/${getTournament(matchedMatch)}.png`}
+                  src={`/pictures/club-logos/${getTournament(latestMatch)}.png`}
                   alt=""
                   className="h-30"
                 />
@@ -84,21 +75,21 @@ export function MatchesGrid() {
                 className="latest-match-score font-semibold text-[38px] py-1 my-1 px-2.5
                                   bg-linear-to-b from-[rgba(225,10,50,1)] to-[rgba(10,15,45,1)]"
               >
-                {matchedMatch.isInHome
-                  ? `${matchedMatch.goalBarca} : ${matchedMatch.goalopponent}`
-                  : `${matchedMatch.goalopponent} : ${matchedMatch.goalBarca}`}
+                {latestMatch.isInHome
+                  ? `${latestMatch.goalBarca} : ${latestMatch.goalOpponent}`
+                  : `${latestMatch.goalOpponent} : ${latestMatch.goalBarca}`}
               </div>
             </div>
             <div className="text-white flex flex-col justify-center items-center w-75">
               <div className="latest-match-team-img-div">
                 <img
-                  src={matchedMatch.isInHome ? matchedMatch.image : BarcaIcon}
+                  src={latestMatch.isInHome ? latestMatch.image : BarcaIcon}
                   alt=""
                   className="h-30"
                 />
               </div>
               <div className="font-bold text-[38px]">
-                {matchedMatch.isInHome ? matchedMatch.opponent : "Barcelona"}
+                {latestMatch.isInHome ? latestMatch.opponent : "Barcelona"}
               </div>
             </div>
           </div>
@@ -112,6 +103,7 @@ export function MatchesGrid() {
           {matches.map((match, index) => {
             return (
               <Match
+                key={match._id}
                 matches={matches}
                 index={index}
                 match={match}
