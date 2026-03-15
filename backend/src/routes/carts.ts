@@ -1,6 +1,6 @@
 import { Request,Response,NextFunction, Router } from "express";
 import { Cart } from "../models/Cart";
-import { IItem, Item } from "../models/Item";
+import { Item } from "../models/Item";
 
 
 const router = Router();

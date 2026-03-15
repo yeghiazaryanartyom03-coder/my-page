@@ -13,7 +13,7 @@ export function Header() {
 
   return (
   <>
-    <div className="fixed top-0 left-0 right-0 h-17 bg-[rgb(9,15,45)] p-3.75 text-center text-[20px] font-bold flex items-center justify-between z-1020">
+    <div className="fixed top-0 left-0 right-0 h-17 bg-[rgb(5,20,55)] p-3.75 text-center text-[20px] font-bold flex items-center justify-between z-1020 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.75 after:bg-linear-to-r after:from-blue-700 after:to-red-700 after:content-['']">
       <div className="p-2.5">
         <NavLink to="/" className="no-underline text-white font-bold flex items-center gap-1.25">
           <img src={BarcaLogo} alt="Logo" className="h-10 bg-transparent"/>
@@ -59,7 +59,7 @@ export function Header() {
               </div>
             </div>
           </div>
-    </div>
+        </div>
   </>
   );
 }
