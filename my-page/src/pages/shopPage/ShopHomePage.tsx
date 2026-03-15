@@ -1,6 +1,8 @@
 import { ShopHeader } from "./ShopHomePage/shopComponents/ShopHeader";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchItems } from "../../store/slice/itemSlice";
+import { addToCart, initializeCart } from "../../store/slice/cartSlice";
 
 interface CounterProps {
   min?: number;
@@ -24,89 +26,6 @@ export interface ServerItem extends Iitem {
   shippingMethod: "standard" | "express" | "free"
 }
 
-interface CartItem {
-  itemId: string;
-  quantity: number;
-}
-
-const CART_ID_KEY = "cart_id";
-const CART_DATA_KEY = "cart_data";
-const API_URL = "http://localhost:5000/api";
-
-const generateCartId = (): string => {
-  return `cart_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-};
-
-const getOrCreateCartId = (): string => {
-  let cartId = localStorage.getItem(CART_ID_KEY);
-
-  if (!cartId) {
-    cartId = generateCartId();
-    localStorage.setItem(CART_ID_KEY, cartId);
-  }
-
-  return cartId;
-};
-
-const loadLocalCart = (): CartItem[] => {
-  try {
-    const data = localStorage.getItem(CART_DATA_KEY);
-    if (!data) return [];
-
-    const parsed = JSON.parse(data);
-    return parsed.items || [];
-  } catch {
-    return [];
-  }
-};
-
-const saveLocalCart = (items: CartItem[]): void => {
-  localStorage.setItem(
-    CART_DATA_KEY,
-    JSON.stringify({
-      items,
-      timestamp: Date.now(),
-    }),
-  );
-};
-
-const saveCartToServer = async (
-  cartId: string,
-  items: CartItem[],
-): Promise<void> => {
-  try {
-    const itemsForServer = items.map((item) => ({
-      itemId: item.itemId, // убеждаемся, что это строка
-      quantity: item.quantity,
-    }));
-
-    console.log("Отправляю на сервер:", {
-      cartId,
-      items: itemsForServer,
-    });
-
-    const response = await axios.post(`${API_URL}/cart/add`, {
-      cartId,
-      items: itemsForServer,
-    });
-
-    console.log("✅ Корзина сохранена на сервере:", response.data);
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      console.error("❌ Ошибка сохранения корзины:", {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-        cartId,
-        sentItems: items,
-      });
-    } else if (error instanceof Error) {
-      console.error("❌ Unexpected error:", error.message);
-    } else {
-      console.error("❌ Unknown error:", error);
-    }
-  }
-};
 
 const Counter: React.FC<CounterProps> = ({
   min = 1,
@@ -162,117 +81,41 @@ const Counter: React.FC<CounterProps> = ({
 };
 
 export function ShopHomePage() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [cartId, setCartId] = useState<string>("");
-  const [products, setProducts] = useState<Iitem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  //const [cartTotal, setCartTotal] = useState(0);
+
+  const dispatch = useAppDispatch()
+  const{ items, loading, error} = useAppSelector((state) => state.items)
+  const cartId = useAppSelector((state) => state.cart.cartId)
 
   useEffect(() => {
-    const initializeCart = async () => {
-      setIsLoading(true);
-
-      // 1. Получаем или создаем cartId
-      const id = getOrCreateCartId();
-      setCartId(id);
-
-      // 2. Загружаем из LocalStorage (мгновенно)
-      const localCart = loadLocalCart();
-      setCart(localCart);
-
-      // 3. Пробуем загрузить с сервера
-      try {
-        const response = await axios.get(`${API_URL}/cart/${id}`);
-
-        if (response.data.success && response.data.items?.length > 0) {
-          // ПРЕОБРАЗУЕМ данные с сервера в формат CartItem[]
-          const serverItems: CartItem[] = (response.data.items as ServerItem[])
-            .filter((item) => item && item.id) // фильтруем null
-            .map((item) => ({
-              itemId: String(item.id), // преобразуем в строку и используем правильное поле
-              quantity: item.quantity ?? 1,
-            }));
-
-          console.log("Загружено с сервера:", serverItems);
-
-          // Объединяем с локальной корзиной (или заменяем)
-          setCart(serverItems);
-          saveLocalCart(serverItems);
-          console.log("✅ Загружена корзина с сервера");
-        } else {
-          console.log("Сервер вернул пустую корзину");
-        }
-      } catch (error) {
-        console.log("⚠️ Не удалось загрузить корзину с сервера", error);
-      }
-
-      setIsLoading(false);
-    };
-
-    initializeCart();
-  }, []);
+    if(items.length === 0){
+      dispatch(fetchItems())
+    }
+  }, [dispatch,items.length]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/items`);
-        setProducts(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    dispatch(initializeCart())
+  }, [dispatch]);
 
-    fetchProducts();
-  }, []);
+
+
+  if (loading) return <div>Загрузка матчей...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
+  if (!items.length) return <div>Нет данных о матчах</div>;    
 
   const handleAddToCart = async (
     productId: string,
     quantity: number,
-    productTitle: string,
   ) => {
     console.log(`Adding ${quantity} of product ${productId} to cart`);
 
-    if (!cartId) {
-      const newCartId = getOrCreateCartId();
-      setCartId(newCartId);
-    }
-
-    const currentCartId = cartId || getOrCreateCartId();
-
-    // 1. Обновляем локальное состояние
-    const newCart = [...cart];
-    const existingItemIndex = newCart.findIndex(
-      (item) => item.itemId === productId,
-    );
-
-    if (existingItemIndex >= 0) {
-      // Увеличиваем количество существующего товара
-      newCart[existingItemIndex].quantity += quantity;
-    } else {
-      // Добавляем новый товар
-      newCart.push({ itemId: productId, quantity });
-    }
-
-    setCart(newCart);
-
-    // 2. Сохраняем в LocalStorage
-    saveLocalCart(newCart);
-
-    // 3. Сохраняем на сервере (в фоне)
-    saveCartToServer(currentCartId, newCart);
-
-    // 4. Показываем уведомление
-    alert(`✅ Добавлено ${quantity}x "${productTitle}" в корзину!`);
-
-    // 5. Обновляем счетчик корзины в заголовке
-    //updateCartHeader();
+    dispatch(addToCart({productId,quantity}))
   };
 
   return (
     <>
       <ShopHeader cartId= {cartId}/>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2  gap-1.25 mt-25">
-        {products.map((product) => {
+        {items.map((product) => {
           return (
             <>
               <div
@@ -340,7 +183,7 @@ export function ShopHomePage() {
                     min={1}
                     max={10}
                     onAddToCart={(quantity) => {
-                      handleAddToCart(product.id, quantity, product.title);
+                      handleAddToCart(product.id, quantity);
                     }}
                   />
                 </div>

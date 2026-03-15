@@ -20,21 +20,7 @@ export function CheckoutItem({
   onQuantityChange: (itemId: string, quantity: number) => void;
 }) {
   const itemId = cartItem.id;
-  const removeItem = async () => {
-    try {
-      const response = await axios.delete(
-        "http://localhost:5000/api/cart/remove",
-        {
-          data: { cartId, itemId },
-        },
-      );
-      console.log("deleted", response.data);
-
-      onRemove(itemId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
   return (
     <>
@@ -128,7 +114,7 @@ export function CheckoutItem({
               type="button"
               aria-label="Remove item"
               onClick={() => {
-                removeItem();
+                onRemove(cartItem.id)
               }}
               className="text-neutral-400 hover:text-[#A50044] transition font-medium
                        focus:outline-none focus:text-[#A50044] cursor-pointer"

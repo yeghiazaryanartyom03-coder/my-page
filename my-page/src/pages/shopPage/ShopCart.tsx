@@ -1,91 +1,71 @@
 import { useSearchParams } from "react-router";
 import { ShopHeader } from "./ShopHomePage/shopComponents/ShopHeader";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import type { ServerItem } from "./ShopHomePage";
 import { CheckoutItem } from "./CheckoutItem";
-
-type ShippingMethod = 'standard' | 'express' | 'free';
-
-const shippingCosts: Record<ShippingMethod, number> = {
-  standard: 5,   // $5
-  express: 10,   // $10
-  free: 0,       // $0
-};
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { initializeCart, removeCartItem, updateCartItemQuantity, updateCartItemShipping } from "../../store/slice/cartSlice";
+import { fetchItems } from "../../store/slice/itemSlice";
+import { type ShippingMethod } from "../../types";
+import { useSelector } from "react-redux";
+import { selectShippingTotal, selectSubtotal, selectTotal, selectTotalQuantity } from "../../store/selectors/cartSelectors";
 
 export function ShopCart() {
   const [searchParams] = useSearchParams();
   const cartId = searchParams.get("cartId");
-  const [cartItems,setCartItems] = useState<ServerItem[]>()
-  const [shippingSelections,setShippingSelections] = useState<Record<string,ShippingMethod>>({})
+  const subtotal = useSelector(selectSubtotal)
+  const shippingTotal = useSelector(selectShippingTotal)
+  const total = useSelector(selectTotal)
+  const totalQuantity = useSelector(selectTotalQuantity)
+  const dispatch = useAppDispatch()
+  const {error, items: cartItems} = useAppSelector((state)=> state.cart)
+  const {error: productError, items: products, loading: productLoading} = useAppSelector((state) => state.items)
 
   useEffect(() => {
-    const cartFetch = async () => {
-      
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/cart/${cartId}`);
-        setCartItems(response.data.items)
-
-         const initialShipping: Record<string, ShippingMethod> = {};
-      response.data.items.forEach((item: ServerItem) => {
-        initialShipping[item.id] = item.shippingMethod || 'standard';
-      });
-      setShippingSelections(initialShipping);
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (cartId) {
-      cartFetch();    
-      }
-    
-  }, [cartId]);
-
-  const handleShippingChange = async (itemId: string, method: ShippingMethod) => {
-    // Оптимистично обновляем UI
-    setShippingSelections(prev => ({ ...prev, [itemId]: method }));
-
-    // Отправляем запрос на сервер
-    try {
-      await axios.patch(`http://localhost:5000/api/cart/${cartId}/item/${itemId}`, {
-        shippingMethod: method,
-      });
-    } catch (error) {
-      console.error('Ошибка обновления доставки:', error);
-      // В случае ошибки можно вернуть предыдущее значение
-      setShippingSelections(prev => ({ ...prev, [itemId]: prev[itemId] }));
+    if(cartItems.length === 0){
+      dispatch(initializeCart())
     }
+    if(products.length === 0){
+      dispatch(fetchItems())
+    }
+    
+  }, [dispatch, cartItems.length, products.length]);
+
+  const itemsToShow: ServerItem[] = cartItems
+  .map(cartItem => {
+    const product = products.find(p => p.id === cartItem.itemId);
+    if (!product) return null;
+    return {
+      id: product.id,
+      image: product.image,
+      title: product.title,
+      price: product.price,
+      review: product.review,
+      quantity: cartItem.quantity,
+      shippingMethod: cartItem.shippingMethod,
+    };
+  })
+  .filter((item): item is ServerItem => item !== null);
+
+  const handleShippingChange = (itemId: string, method: ShippingMethod) => {
+    dispatch(updateCartItemShipping({itemId, shippingMethod: method}))
   };
 
   const handleQuantityChange = async (itemId:string, newQuantity:number) =>{
-    
-    const previousItems = cartItems
-
-    setCartItems(prev =>
-      prev.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item
-    )
-  );
-
-    try{
-      await axios.patch(`http://localhost:5000/api/cart/${cartId}/item/${itemId}`, {
-        quantity: newQuantity,
-      });
-    }catch(error){
-      console.log(error)
-
-      setCartItems(previousItems)
-    }
+    dispatch(updateCartItemQuantity({ itemId, quantity: newQuantity}))
   }
 
   const handleRemoveItem = (itemId: string) => {
-    setCartItems(prev => prev?.filter(item => item.id !== itemId));
+   dispatch(removeCartItem(itemId));
   };
 
   if (!cartId) {
     return <div>Cart ID is missing</div>;
   }
+
+  if (productLoading) return <div>cart loading...</div>;
+  if (error) return <div>error: {error}</div>;
+  if(productError) return <div> error: {productError}</div>
   
   return (
     <>
@@ -98,15 +78,16 @@ export function ShopCart() {
           {/* ---------- ТОВАРЫ ---------- */}
           <div className="lg:col-span-2 space-y-4">
             {/* Товар vse */}
-          {cartItems===undefined || cartItems.map((cartItem)=>{
+          {itemsToShow===undefined || itemsToShow.map((cartItem)=>{
             
             return <CheckoutItem key={cartItem.id} 
                                  cartItem={cartItem} 
                                  cartId={cartId} 
                                  onRemove={handleRemoveItem} 
                                  onShippingChange={handleShippingChange} 
-                                 selectedShipping={shippingSelections[cartItem.id] || 'standard'}
-                                 onQuantityChange={handleQuantityChange}/>
+                                 selectedShipping={cartItem.shippingMethod}
+                                 onQuantityChange={handleQuantityChange}
+                                 />
           })}
         </div>
 
@@ -119,12 +100,12 @@ export function ShopCart() {
 
               <div className="space-y-4 text-neutral-300">
                 <div className="flex justify-between">
-                  <span>Subtotal (3 items)</span>
-                  <span className="text-white font-medium">$360</span>
+                  <span>Subtotal ({totalQuantity} items)</span>
+                  <span className="text-white font-medium">${subtotal/100}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="text-white font-medium">$25</span>
+                  <span className="text-white font-medium">${(shippingTotal/100).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -132,7 +113,7 @@ export function ShopCart() {
 
               <div className="flex justify-between font-bold text-xl text-white">
                 <span>Total</span>
-                <span className="text-[#A50044]">$385</span>
+                <span className="text-[#A50044]">${(total/100).toFixed(2)}</span>
               </div>
 
               <button

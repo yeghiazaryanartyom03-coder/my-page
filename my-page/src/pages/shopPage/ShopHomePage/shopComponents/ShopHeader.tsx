@@ -4,7 +4,7 @@ import BarcaLogo from '../../../../assets/icons/barca-logo.png'
 import ShopLogo from '../../../../../public/pictures/shop-logos/shopping-cart.png'
 import SearchIcon from '../../../../../public/pictures/shop-logos/search.svg'
 
-export function ShopHeader({cartId}:{cartId:string}){
+export function ShopHeader({cartId}:{cartId:string | null}){
   return(
     <>
       <div className="fixed top-0 left-0 right-0 h-15 p-3.75 text-center bg-white text-xl font-bold flex items-center justify-between z-1020">
