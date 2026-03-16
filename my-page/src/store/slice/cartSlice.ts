@@ -145,10 +145,8 @@ export const updateCartItemQuantity = createAsyncThunk<
     return rejectWithValue('Корзина не инициализирована');
   }
 
-  // Сохраняем предыдущее состояние для отката
   const previousItems = [...items];
 
-  // Оптимистично обновляем localStorage и вернём новое состояние через редьюсер
   const newItems = items.map(item =>
     item.itemId === itemId ? { ...item, quantity } : item
   );
@@ -156,9 +154,8 @@ export const updateCartItemQuantity = createAsyncThunk<
 
   try {
     await axios.patch(`http://localhost:5000/api/cart/${cartId}/item/${itemId}`, { quantity });
-    return { itemId, quantity }; // успех
+    return { itemId, quantity }; 
   } catch (error) {
-    // В случае ошибки откатываем localStorage
     saveLocalCart(previousItems);
     console.error('Ошибка обновления количества:', error);
     return rejectWithValue('Не удалось обновить количество');

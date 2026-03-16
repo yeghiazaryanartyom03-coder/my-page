@@ -129,6 +129,7 @@ export interface ILegend {
 }
 
 export interface IItem {
+  _id: string;
   id: string;
   image: string;
   title: string;

@@ -23,7 +23,7 @@ export const fetchHistories = createAsyncThunk<IHistory[]>(
 )
 
 const historiesSlice = createSlice({
-  name: 'matches',
+  name: 'histories',
   initialState,
   reducers:{
 
