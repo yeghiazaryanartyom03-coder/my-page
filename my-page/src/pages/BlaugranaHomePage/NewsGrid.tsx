@@ -35,7 +35,7 @@ export function NewsGrid() {
                       lg:grid-cols-3 lg: scale-95 
                       xl:grid-cols-4 xl:scale-105 xl:mt-15 xl:h-125">
         {news.map((newsRegular)=>{
-          return <News news={newsRegular}/>
+          return <News key={newsRegular._id} news={newsRegular}/>
         })}
       </div>
     </>

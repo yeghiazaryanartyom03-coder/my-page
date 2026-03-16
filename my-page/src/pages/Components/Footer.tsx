@@ -60,7 +60,7 @@ export function Footer() {
               {players.map((player) => {
                 if (player.position === "Goalkeeper")
                   return (
-                    <PlayerName name={player.name} surname={player.surname} />
+                    <PlayerName key={player._id} name={player.name} surname={player.surname} />
                   );
               })}
             </div>
@@ -69,7 +69,7 @@ export function Footer() {
               {players.map((player) => {
                 if (player.position === "Defender")
                   return (
-                    <PlayerName name={player.name} surname={player.surname} />
+                    <PlayerName key={player._id} name={player.name} surname={player.surname} />
                   );
               })}
             </div>
@@ -78,7 +78,7 @@ export function Footer() {
               {players.map((player) => {
                 if (player.position === "Midfielder")
                   return (
-                    <PlayerName name={player.name} surname={player.surname} />
+                    <PlayerName key={player._id} name={player.name} surname={player.surname} />
                   );
               })}
             </div>
@@ -87,7 +87,7 @@ export function Footer() {
               {players.map((player) => {
                 if (player.position === "Forward")
                   return (
-                    <PlayerName name={player.name} surname={player.surname} />
+                    <PlayerName key={player._id} name={player.name} surname={player.surname} />
                   );
               })}
             </div>

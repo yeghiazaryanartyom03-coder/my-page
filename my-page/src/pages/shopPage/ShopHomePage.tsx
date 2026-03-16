@@ -119,7 +119,7 @@ export function ShopHomePage() {
           return (
             <>
               <div
-                key={product.id}
+                key={product._id}
                 className="bg-white rounded-3xl flex flex-col items-center"
               >
                 <div className="item-img-div">

@@ -24,7 +24,7 @@ return(
           
           {histories.map((story)=>{
             return ( 
-              <HistoryContent  story={story}/> 
+              <HistoryContent key={story._id} story={story}/> 
             )
           })}
         </div>

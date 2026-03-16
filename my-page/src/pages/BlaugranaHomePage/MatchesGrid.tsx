@@ -24,7 +24,7 @@ export function MatchesGrid() {
       <div className="matches mt-6 flex flex-row justify-around gap-2.5 overflow-x-auto">
         {matches.map((match) => {
           if (match.goalOpponent === undefined) {
-            return <MatchHomePage match={match} />;
+            return <MatchHomePage key={match._id} match={match} />;
           } else {
             return "";
           }

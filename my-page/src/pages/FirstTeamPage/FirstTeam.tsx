@@ -38,7 +38,7 @@ export function FirstTeam() {
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {players.map((player) => {
               if (player.position === "Goalkeeper") {
-                return <Player player={player} variant={"first-team"} />;
+                return <Player key={player._id} player={player} variant={"first-team"} />;
               }
             })}
           </div>
@@ -51,7 +51,7 @@ export function FirstTeam() {
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {players.map((player) => {
               if (player.position === "Defender") {
-                return <Player player={player} variant={"first-team"} />;
+                return <Player key={player._id} player={player} variant={"first-team"} />;
               }
             })}
           </div>
@@ -64,7 +64,7 @@ export function FirstTeam() {
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {players.map((player) => {
               if (player.position === "Midfielder") {
-                return <Player player={player} variant={"first-team"} />;
+                return <Player key={player._id} player={player} variant={"first-team"} />;
               }
             })}
           </div>
@@ -77,7 +77,7 @@ export function FirstTeam() {
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {players.map((player) => {
               if (player.position === "Forward") {
-                return <Player player={player} variant={"first-team"} />;
+                return <Player key={player._id} player={player} variant={"first-team"} />;
               }
             })}
           </div>
